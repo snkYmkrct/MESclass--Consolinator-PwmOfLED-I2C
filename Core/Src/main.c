@@ -154,7 +154,7 @@ int main(void)
 
   TIM3->CCR2 = 100;
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
-  int8_t dutyCycle = 0;
+  //int8_t dutyCycle = 0;
 
   uint32_t adc_val = 0u;
 
@@ -174,7 +174,26 @@ int main(void)
 		  ConsoleProcess();
 	  }
 
-/*	  if (adc_val != MyPotValue){
+	  // vendor address 0x12  -->  use address 0x24
+	  if (HAL_I2C_IsDeviceReady(&hi2c3, 0x24 ,1, HAL_MAX_DELAY) == HAL_OK){
+		  printf("\r\n  air particle sensor ready\r\n");
+		  HAL_Delay(1000);
+	  }
+	  else {
+		  printf("\r\n  air particle sensor ~~~NOT~~~  ready\r\n");
+	  }
+
+	  // vendor address 0x62  -->  use address 0xC4
+	  if (HAL_I2C_IsDeviceReady(&hi2c3, 0xC4 ,1, HAL_MAX_DELAY) == HAL_OK){
+		  printf("\r\n  CO2 sensor ready\r\n");
+		  HAL_Delay(1000);
+	  }
+	  else {
+		  printf("\r\n  CO2 sensor ~~~NOT~~~  ready\r\n");
+	  }
+
+
+	 /* if (adc_val != MyPotValue){
 		  printf("\r\n pot value %d   %d \r\n ", MyPotValue, adc_val);
 		  adc_val = MyPotValue;
 		  HAL_ADC_Start_IT(&hadc3);
