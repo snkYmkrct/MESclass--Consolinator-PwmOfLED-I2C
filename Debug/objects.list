@@ -1,6 +1,8 @@
 "./Core/Src/Consolinator/console.o"
 "./Core/Src/Consolinator/consoleCommands.o"
 "./Core/Src/Consolinator/consoleIo.o"
+"./Core/Src/Sensors/aiq_PMSA003I_i2c.o"
+"./Core/Src/Sensors/co2_scd40_i2c.o"
 "./Core/Src/main.o"
 "./Core/Src/stm32f4xx_hal_msp.o"
 "./Core/Src/stm32f4xx_hal_timebase_tim.o"

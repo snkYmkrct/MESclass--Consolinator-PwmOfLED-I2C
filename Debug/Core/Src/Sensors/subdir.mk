@@ -5,29 +5,26 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Core/Src/Consolinator/console.c \
-../Core/Src/Consolinator/consoleCommands.c \
-../Core/Src/Consolinator/consoleIo.c 
+../Core/Src/Sensors/aiq_PMSA003I_i2c.c \
+../Core/Src/Sensors/co2_scd40_i2c.c 
 
 OBJS += \
-./Core/Src/Consolinator/console.o \
-./Core/Src/Consolinator/consoleCommands.o \
-./Core/Src/Consolinator/consoleIo.o 
+./Core/Src/Sensors/aiq_PMSA003I_i2c.o \
+./Core/Src/Sensors/co2_scd40_i2c.o 
 
 C_DEPS += \
-./Core/Src/Consolinator/console.d \
-./Core/Src/Consolinator/consoleCommands.d \
-./Core/Src/Consolinator/consoleIo.d 
+./Core/Src/Sensors/aiq_PMSA003I_i2c.d \
+./Core/Src/Sensors/co2_scd40_i2c.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
-Core/Src/Consolinator/%.o Core/Src/Consolinator/%.su: ../Core/Src/Consolinator/%.c Core/Src/Consolinator/subdir.mk
+Core/Src/Sensors/%.o Core/Src/Sensors/%.su: ../Core/Src/Sensors/%.c Core/Src/Sensors/subdir.mk
 	arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I"C:/Users/silvi/STM32CubeIDE/workspace_1.9.0/Week 5 homework/Core/Src/Sensors" -I"C:/Users/silvi/STM32CubeIDE/workspace_1.9.0/Week 5 homework/Core/Src/Consolinator" -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 
-clean: clean-Core-2f-Src-2f-Consolinator
+clean: clean-Core-2f-Src-2f-Sensors
 
-clean-Core-2f-Src-2f-Consolinator:
-	-$(RM) ./Core/Src/Consolinator/console.d ./Core/Src/Consolinator/console.o ./Core/Src/Consolinator/console.su ./Core/Src/Consolinator/consoleCommands.d ./Core/Src/Consolinator/consoleCommands.o ./Core/Src/Consolinator/consoleCommands.su ./Core/Src/Consolinator/consoleIo.d ./Core/Src/Consolinator/consoleIo.o ./Core/Src/Consolinator/consoleIo.su
+clean-Core-2f-Src-2f-Sensors:
+	-$(RM) ./Core/Src/Sensors/aiq_PMSA003I_i2c.d ./Core/Src/Sensors/aiq_PMSA003I_i2c.o ./Core/Src/Sensors/aiq_PMSA003I_i2c.su ./Core/Src/Sensors/co2_scd40_i2c.d ./Core/Src/Sensors/co2_scd40_i2c.o ./Core/Src/Sensors/co2_scd40_i2c.su
 
-.PHONY: clean-Core-2f-Src-2f-Consolinator
+.PHONY: clean-Core-2f-Src-2f-Sensors
 

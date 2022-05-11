@@ -26,6 +26,7 @@
 #include <string.h>
 #include "console.h"
 #include "consoleIo.h"
+#include "aiq_PMSA003I_i2c.h"
 
 /* USER CODE END Includes */
 
@@ -162,6 +163,25 @@ int main(void)
   //uint8_t TurnPWMOn = 1u;
   ConsoleInit();
 
+  PM25_AQI_Data data = {0};
+
+  if (HAL_I2C_IsDeviceReady(&hi2c3, PMSA003I_I2CADDR ,1, HAL_MAX_DELAY) == HAL_OK){
+	  printf("\r\n  air particle sensor ready\r\n");
+	  // HAL_Delay(1000);
+  }
+  else {
+	  printf("\r\n  air particle sensor ~~~NOT~~~  ready\r\n");
+  }
+
+  // vendor address 0x62  -->  use address 0xC4
+  if (HAL_I2C_IsDeviceReady(&hi2c3, 0xC4 ,1, HAL_MAX_DELAY) == HAL_OK){
+	  printf("\r\n  CO2 sensor ready\r\n");
+	  // HAL_Delay(1000);
+  }
+  else {
+	  printf("\r\n  CO2 sensor ~~~NOT~~~  ready\r\n");
+  }
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -174,23 +194,33 @@ int main(void)
 		  ConsoleProcess();
 	  }
 
-	  // vendor address 0x12  -->  use address 0x24
-	  if (HAL_I2C_IsDeviceReady(&hi2c3, 0x24 ,1, HAL_MAX_DELAY) == HAL_OK){
-		  printf("\r\n  air particle sensor ready\r\n");
-		  HAL_Delay(1000);
-	  }
-	  else {
-		  printf("\r\n  air particle sensor ~~~NOT~~~  ready\r\n");
+	  if (aiq_PMSA003I_i2c_read(&data)){
+		  printf("\r\nAQI reading success\r\n");
+		  printf("---------------------------------------\r\n");
+		  printf("Concentration Units (standard)\r\n");
+		  printf("---------------------------------------\r\n");
+		  printf("PM 1.0: %d \r\n", data.pm10_standard);
+		  printf("PM 2.5: %d \r\n", data.pm25_standard);
+		  printf("PM 10: %d \r\n", data.pm100_standard);
+
+		  printf("\r\nConcentration Units (environmental)\r\n");
+		  printf("---------------------------------------\r\n");
+		  printf("PM 1.0: %d \r\n", data.pm10_env);
+		  printf("PM 2.5: %d \r\n", data.pm25_env);
+		  printf("PM 10: %d \r\n", data.pm100_env);
+
+		  printf("\r\n---------------------------------------\r\n");
+		  printf("Particles > 0.3um / 0.1L air: %d \r\n", data.particles_03um);
+		  printf("Particles > 0.5um / 0.1L air: %d \r\n", data.particles_05um);
+		  printf("Particles > 1.0um / 0.1L air: %d \r\n", data.particles_10um);
+		  printf("Particles > 2.5um / 0.1L air: %d \r\n", data.particles_25um);
+		  printf("Particles > 5.0um / 0.1L air: %d \r\n", data.particles_50um);
+		  printf("Particles > 10 um / 0.1L air: %d \r\n", data.particles_100um);
+		  printf("\r\n---------------------------------------\r\n");
+
+		  HAL_Delay(3000);
 	  }
 
-	  // vendor address 0x62  -->  use address 0xC4
-	  if (HAL_I2C_IsDeviceReady(&hi2c3, 0xC4 ,1, HAL_MAX_DELAY) == HAL_OK){
-		  printf("\r\n  CO2 sensor ready\r\n");
-		  HAL_Delay(1000);
-	  }
-	  else {
-		  printf("\r\n  CO2 sensor ~~~NOT~~~  ready\r\n");
-	  }
 
 
 	 /* if (adc_val != MyPotValue){
