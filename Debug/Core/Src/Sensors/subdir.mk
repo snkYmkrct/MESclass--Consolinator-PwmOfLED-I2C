@@ -6,15 +6,27 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Core/Src/Sensors/aiq_PMSA003I_i2c.c \
-../Core/Src/Sensors/co2_scd40_i2c.c 
+../Core/Src/Sensors/co2_scd40_i2c.c \
+../Core/Src/Sensors/scd4x_i2c.c \
+../Core/Src/Sensors/sensirion_common.c \
+../Core/Src/Sensors/sensirion_i2c.c \
+../Core/Src/Sensors/sensirion_i2c_hal.c 
 
 OBJS += \
 ./Core/Src/Sensors/aiq_PMSA003I_i2c.o \
-./Core/Src/Sensors/co2_scd40_i2c.o 
+./Core/Src/Sensors/co2_scd40_i2c.o \
+./Core/Src/Sensors/scd4x_i2c.o \
+./Core/Src/Sensors/sensirion_common.o \
+./Core/Src/Sensors/sensirion_i2c.o \
+./Core/Src/Sensors/sensirion_i2c_hal.o 
 
 C_DEPS += \
 ./Core/Src/Sensors/aiq_PMSA003I_i2c.d \
-./Core/Src/Sensors/co2_scd40_i2c.d 
+./Core/Src/Sensors/co2_scd40_i2c.d \
+./Core/Src/Sensors/scd4x_i2c.d \
+./Core/Src/Sensors/sensirion_common.d \
+./Core/Src/Sensors/sensirion_i2c.d \
+./Core/Src/Sensors/sensirion_i2c_hal.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -24,7 +36,7 @@ Core/Src/Sensors/%.o Core/Src/Sensors/%.su: ../Core/Src/Sensors/%.c Core/Src/Sen
 clean: clean-Core-2f-Src-2f-Sensors
 
 clean-Core-2f-Src-2f-Sensors:
-	-$(RM) ./Core/Src/Sensors/aiq_PMSA003I_i2c.d ./Core/Src/Sensors/aiq_PMSA003I_i2c.o ./Core/Src/Sensors/aiq_PMSA003I_i2c.su ./Core/Src/Sensors/co2_scd40_i2c.d ./Core/Src/Sensors/co2_scd40_i2c.o ./Core/Src/Sensors/co2_scd40_i2c.su
+	-$(RM) ./Core/Src/Sensors/aiq_PMSA003I_i2c.d ./Core/Src/Sensors/aiq_PMSA003I_i2c.o ./Core/Src/Sensors/aiq_PMSA003I_i2c.su ./Core/Src/Sensors/co2_scd40_i2c.d ./Core/Src/Sensors/co2_scd40_i2c.o ./Core/Src/Sensors/co2_scd40_i2c.su ./Core/Src/Sensors/scd4x_i2c.d ./Core/Src/Sensors/scd4x_i2c.o ./Core/Src/Sensors/scd4x_i2c.su ./Core/Src/Sensors/sensirion_common.d ./Core/Src/Sensors/sensirion_common.o ./Core/Src/Sensors/sensirion_common.su ./Core/Src/Sensors/sensirion_i2c.d ./Core/Src/Sensors/sensirion_i2c.o ./Core/Src/Sensors/sensirion_i2c.su ./Core/Src/Sensors/sensirion_i2c_hal.d ./Core/Src/Sensors/sensirion_i2c_hal.o ./Core/Src/Sensors/sensirion_i2c_hal.su
 
 .PHONY: clean-Core-2f-Src-2f-Sensors
 

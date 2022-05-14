@@ -63,7 +63,7 @@ main-build: Week\ 5\ homework.elf secondary-outputs
 
 # Tool invocations
 Week\ 5\ homework.elf Week\ 5\ homework.map: $(OBJS) $(USER_OBJS) C:\Users\silvi\STM32CubeIDE\workspace_1.9.0\Week\ 5\ homework\STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Week 5 homework.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\silvi\STM32CubeIDE\workspace_1.9.0\Week 5 homework\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Week 5 homework.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "Week 5 homework.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\silvi\STM32CubeIDE\workspace_1.9.0\Week 5 homework\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Week 5 homework.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

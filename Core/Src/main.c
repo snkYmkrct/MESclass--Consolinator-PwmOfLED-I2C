@@ -28,6 +28,10 @@
 #include "consoleIo.h"
 #include "aiq_PMSA003I_i2c.h"
 
+#include "scd4x_i2c.h"
+#include "sensirion_common.h"
+#include "sensirion_i2c_hal.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -183,6 +187,34 @@ int main(void)
 	  printf("\r\n  CO2 sensor ~~~NOT~~~  ready\r\n");
   }
 
+
+  int16_t error = 0;
+
+  // Clean up potential SCD40 states
+  scd4x_wake_up();
+  scd4x_stop_periodic_measurement();
+  scd4x_reinit();
+
+  uint16_t serial_0;
+  uint16_t serial_1;
+  uint16_t serial_2;
+  error = scd4x_get_serial_number(&serial_0, &serial_1, &serial_2);
+  if (error) {
+      printf("Error executing scd4x_get_serial_number(): %i \r\n", error);
+  } else {
+      printf("serial: 0x%04x%04x%04x\r\n", serial_0, serial_1, serial_2);
+  }
+
+  // Start Measurement
+
+  error = scd4x_start_periodic_measurement();
+  if (error) {
+      printf("Error executing scd4x_start_periodic_measurement(): %i \r\n",
+             error);
+  }
+
+  printf("Waiting for first measurement... (5 sec)\r\n");
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -194,6 +226,34 @@ int main(void)
 	  if (isConsoleStarted){
 		  ConsoleProcess();
 	  }
+
+      // Read Measurement
+      sensirion_i2c_hal_sleep_usec(100000);
+      bool data_ready_flag = false;
+      error = scd4x_get_data_ready_flag(&data_ready_flag);
+      if (error) {
+          printf("Error executing scd4x_get_data_ready_flag(): %i \r\n", error);
+          continue;
+      }
+      if (!data_ready_flag) {
+          continue;
+      }
+
+      uint16_t co2;
+      int32_t temperature;
+      int32_t humidity;
+      error = scd4x_read_measurement(&co2, &temperature, &humidity);
+      if (error) {
+          printf("Error executing scd4x_read_measurement(): %i \r\n", error);
+      } else if (co2 == 0) {
+          printf("Invalid sample detected, skipping.\r\n");
+      } else {
+          printf(" \r\nCO2: %u \r\n", co2);
+          printf("Temperature: %f °C \r\n", (float)temperature/1000);
+          printf("Humidity: %ld mRH \r\n", humidity);
+      }
+
+
 
 	  if (aiq_PMSA003I_i2c_read(&data)){
 		  printf("\r\nAQI reading success\r\n");
@@ -219,8 +279,9 @@ int main(void)
 		  printf("Particles > 10 um / 0.1L air: %d \r\n", data.particles_100um);
 		  printf("\r\n---------------------------------------\r\n");
 
-		  HAL_Delay(3000);
+		  //HAL_Delay(3000);
 	  }
+
 
 
 
