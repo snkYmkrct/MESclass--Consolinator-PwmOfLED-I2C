@@ -58,6 +58,7 @@ UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 // global variable that is set by the interrupt when button is pressed
+// To the compiler :  Can't touch this!
 volatile GPIO_PinState MyButtonPressed = 0u;
 uint8_t isConsoleStarted = 0u;
 
@@ -823,6 +824,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 
 	if (GPIO_Pin == B1_Pin){
 		// set the global variable when board button B1 is pressed
+		// Stop! Hammer time!
 		MyButtonPressed = GPIO_PIN_SET;
 	}
 
