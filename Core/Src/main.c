@@ -228,7 +228,7 @@ int main(void)
 	  }
 
       // Read Measurement
-      sensirion_i2c_hal_sleep_usec(100000);
+      sensirion_i2c_hal_sleep_usec(50000);
       bool data_ready_flag = false;
       error = scd4x_get_data_ready_flag(&data_ready_flag);
       if (error) {
