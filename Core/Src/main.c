@@ -249,8 +249,8 @@ int main(void)
           printf("Invalid sample detected, skipping.\r\n");
       } else {
           printf(" \r\nCO2: %u \r\n", co2);
-          printf("Temperature: %f °C \r\n", (float)temperature/1000);
-          printf("Humidity: %ld mRH \r\n", humidity);
+          printf("Temperature: %.2f °C \r\n", (float)temperature/1000);
+          printf("Humidity: %.2f %% \r\n", (float)humidity/1000);
       }
 
 
