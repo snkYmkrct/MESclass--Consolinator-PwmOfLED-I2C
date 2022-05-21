@@ -66,7 +66,7 @@ UART_HandleTypeDef huart1;
 volatile GPIO_PinState MyButtonPressed = 0u;
 uint8_t isConsoleStarted = 0u;
 uint8_t hugeVar[65536];
-int randomVar;
+int randomVar = 10;  // initialized with 0 is treated same as not initialized for global / static variables -- compiler optimization
 
 //volatile uint16_t MyPotValue = 0u;
 
@@ -108,11 +108,15 @@ int __io_getchar(void) {
 void randomFunction1();
 
 void randomFunction(){
-	static int rdV1;
+	static int rdV;
+	static int rdV1 = 10;
 	int rdV2;
+	int rdV3 = 9;
 
-	  printf("   Static int var in function     | %p \r\n", &rdV1);
+	  printf("   Static int var in function     | %p \r\n", &rdV);
+	  printf("   Initializ stat int var in func | %p \r\n", &rdV1);
 	  printf("   Int variable inside function   | %p \r\n", &rdV2);
+	  printf("   Initialized int var in func    | %p \r\n", &rdV3);
 	  printf("----------------------------------|--------------\r\n");
 	  randomFunction1();
 }
@@ -246,10 +250,10 @@ int main(void)
 
 
   printf("\r\n\r\n");
-  printf("   Initialized global variable    | %p \r\n", &MyButtonPressed);
-  printf("   Initialized global variable    | %p \r\n", &isConsoleStarted);
-  printf("   UNinitialized global variable  | %p \r\n", &hugeVar);
-  printf("   UNinitialized global variable  | %p \r\n", &randomVar);
+  printf("   UNinitialized global variable  | %p \r\n", &MyButtonPressed);
+  printf("   UNinitialized global variable  | %p \r\n", &isConsoleStarted);
+  printf("   UNinitialized huge gl variable | %p \r\n", &hugeVar);
+  printf("   Initialized global variable    | %p \r\n", &randomVar);
   printf("----------------------------------|--------------\r\n");
   printf("   Function address               | %.8p \r\n", &randomFunction);
   printf("----------------------------------|--------------\r\n");
