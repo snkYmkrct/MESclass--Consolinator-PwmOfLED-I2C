@@ -1,9 +1,40 @@
-/*
- * aiq_PMSA003I.c
- *
- *  Created on: May 11, 2022
- *      Author: silvia
- */
+/** aiq_PMSA003I_i2c.c
+  *
+  *  Created on: May 11, 2022
+  *      Code ported by: snkYmkrct
+  *
+  *  Ported from Adafruit_PM25AQI.cpp
+  *  	in the Adafruit PM2.5 Air Quality sensor Arduino library
+  *
+  *  	https://github.com/adafruit/Adafruit_PM25AQI
+  *
+  ******************************************************************************
+  * Original file text:
+  *
+  * @file Adafruit_PM25AQI.cpp
+  *
+  * @mainpage Adafruit PM2.5 air quality sensor driver
+  *
+  * @section intro_sec Introduction
+  *
+  * This is the documentation for Adafruit's PM2.5 AQI driver for the
+  * Arduino platform.  It is designed specifically to work with the
+  * Adafruit PM2.5 Air quality sensors: http://www.adafruit.com/products/4632
+  *
+  * These sensors use I2C or UART to communicate.
+  *
+  * Adafruit invests time and resources providing this open source code,
+  * please support Adafruit and open-source hardware by purchasing
+  * products from Adafruit!
+  *
+  *
+  * @section author Author
+  * Written by Ladyada for Adafruit Industries.
+  *
+  * @section license License
+  * BSD license, all text here must be included in any redistribution.
+  *
+ **/
 
 
 #include "aiq_PMSA003I_i2c.h"
